@@ -10,6 +10,10 @@ use App\Http\Controllers\clientController;
 use App\Http\Controllers\addressController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\orderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderModule\OrderModuleController;
+use App\Models\OrderModule\OrderModuleModel;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,8 +57,20 @@ Route::post("/client/checkUser", [clientController::class, "getUser"]);
 Route::post("/client/getUserAddress", [addressController::class, "getUserAddress"]);
 Route::get("/getfooter", [addressController::class, "getFooter"]);
 Route::post("/client/addUserAddress", [addressController::class, "addUserAddress"]);
+Route::post("/client/editUserAddress", [addressController::class, "updateUserAddress"]);
+Route::post("/client/deleteUserAddress", [addressController::class, "softDeleteUserAddress"]);
+
 
 Route::post("/order/placeOrder", [orderController::class, "placeOrder"]);
 Route::post("/order/getOrder", [orderController::class, "getOrder"]);
 
 Route::get("/getConfig", [ConfigController::class, "getConfig"]);
+
+
+Route::post('/getCartProduct', [CartController::class, "getCart"]);
+Route::post('/addCartProduct', [CartController::class, "addProduct"]);
+
+Route::post('/order', [OrderModuleController::class, "createOrder"]);
+Route::post('/order/get', [OrderModuleController::class, "getOrder"]);
+// Route::post('/order', [OrderModuleController::class, "createOrder"]);
+
