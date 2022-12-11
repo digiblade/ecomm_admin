@@ -50,4 +50,8 @@ class OrderModuleController extends Controller
     {
         return  OrderModuleModel::where("user_id", "=", $req->userid)->orderBy("id", "DESC")->with("section")->get();
     }
+    public function getAllOrder(Request $req)
+    {
+        return  OrderModuleModel::orderBy("id", "DESC")->with("section")->get();
+    }
 }
