@@ -211,6 +211,28 @@ class productController extends Controller
         }
         return redirect()->back()->with("Product Added");
     }
+    public function addProductFormDataByApi(Request $req)
+    {
+        $data = new productModel;
+        $data->product_id = md5(microtime());
+        $data->category_id = $req->category_id;
+        $data->product_price = isset($req->product_price) ? $req->product_price : "0";
+        $data->product_merchantprice = isset($req->product_merchantprice) ? $req->product_merchantprice : "0";
+        $data->product_mrp = isset($req->product_mrp) ? $req->product_mrp : "0";
+        $data->product_name = $req->product_name ? $req->product_name : "";
+        $data->product_description = $req->product_description ? $req->product_description : "";
+        $data->product_stockcount = $req->product_stockcount ? $req->product_stockcount : "1";
+        $data->product_stockcount = $req->product_stockcount ? $req->product_stockcount : "1";
+        $data->created_by = $req->uid ? $req->uid : "admin";
+        $data->created_at = date("Y/m/d H:i:s");
+        $data->updated_at = date("Y/m/d H:i:s");
+        if ($data->save()) {
+            $docs = new documentController;
+            $res = $data->id;
+            $docRes = $docs->addDocument($req, $res);
+        }
+        return ["response" => true];
+    }
     public function editProductForm(Request $req, $id)
     {
         $product = $this->getProductById($id);
@@ -365,5 +387,24 @@ class productController extends Controller
             }
         }
         return $data;
+    }
+    public function createSection(Request $req)
+    {
+        $data = $req->section;
+        $section = array();
+        foreach ($data as $sectionData) {
+            $sectionCheck =  sectionToProduct::where("section_model_id", "=", $sectionData['section_model_id'])->where("product_model_id", "=", $sectionData['product_model_id'])->get();
+            if (count($sectionCheck) == 0) {
+                $sectionData['created_at'] = date("Y/m/d H:i:s");
+                $sectionData['updated_at'] = date("Y/m/d H:i:s");
+                array_push($section, $sectionData);
+            }
+        }
+        $res = sectionToProduct::insert($section);
+        return [
+            "response" => true,
+            "msg" => "Section created"
+
+        ];
     }
 }

@@ -11,8 +11,11 @@ use App\Http\Controllers\addressController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\deliveryController;
 use App\Http\Controllers\OrderModule\OrderModuleController;
 use App\Models\OrderModule\OrderModuleModel;
+use App\Models\statusModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +41,8 @@ Route::get("/cat-product/{cid}", [productController::class, "getProductByCatId"]
 Route::post("/product/add", [productController::class, "addProduct"]);
 Route::post("/product/update", [productController::class, "updateProduct"]);
 
+Route::post("/add-product", [productController::class, "addProductFormDataByApi"]);
+
 // category api
 Route::get("/category", [categoryController::class, "getCategory"]);
 Route::post("/category/add", [categoryController::class, "addCategory"]);
@@ -49,6 +54,7 @@ Route::get("/document/{label}", [documentController::class, "getDocumentByLabel"
 Route::post("/add/document", [documentController::class, "addDocument"]);
 
 Route::get("/product-section", [productController::class, "sectionProduct"]);
+Route::post("/product-section/add", [productController::class, "createSection"]);
 Route::get("/getSection/{id}", [productController::class, "sectionProductById"]);
 
 Route::post("/client/register", [clientController::class, "addUser"]);
@@ -72,5 +78,16 @@ Route::post('/addCartProduct', [CartController::class, "addProduct"]);
 
 Route::post('/order', [OrderModuleController::class, "createOrder"]);
 Route::post('/order/get', [OrderModuleController::class, "getOrder"]);
+Route::post('/order/all', [OrderModuleController::class, "getAllOrder"]);
 // Route::post('/order', [OrderModuleController::class, "createOrder"]);
+
+
+//admin
+
+Route::get("/dashboard", [dashboardController::class, "getDashboardData"]);
+
+Route::get("/getStatus", [deliveryController::class, "getStatus"]);
+Route::post("/addStatus", [deliveryController::class, "addStatus"]);
+Route::post("/changeStatus", [deliveryController::class, "createOrderStatus"]);
+Route::post("/getOrderStatus", [deliveryController::class, "getOrderStatus"]);
 
