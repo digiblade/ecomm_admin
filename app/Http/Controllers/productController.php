@@ -407,4 +407,11 @@ class productController extends Controller
 
         ];
     }
+    public function searchProduct(Request $req)
+    {
+        $keyword = $req->keyword;
+        return productModel::where(function ($query) use ($keyword) {
+            $query->where("product_name", "like", '%' . $keyword . '%')->orWhere("product_description", "like", '%' . $keyword . '%');
+        })->where('product_isactive', "=", true)->with("category")->with("documents")->get();
+    }
 }
