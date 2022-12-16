@@ -40,6 +40,7 @@ Route::get("/product/{id}", [productController::class, "getProductById"]);
 Route::get("/cat-product/{cid}", [productController::class, "getProductByCatId"]);
 Route::post("/product/add", [productController::class, "addProduct"]);
 Route::post("/product/update", [productController::class, "updateProduct"]);
+Route::post("/product/search", [productController::class, "searchProduct"]);
 
 Route::post("/add-product", [productController::class, "addProductFormDataByApi"]);
 
