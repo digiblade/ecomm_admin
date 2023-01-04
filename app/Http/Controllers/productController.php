@@ -112,6 +112,66 @@ class productController extends Controller
 
         return view("panel.utilities.Tabel.product", array("data" => $data, "config" => $config));
     }
+    public function viewProductSection()
+    {
+        $data = $this->sectionProduct();
+        // return $data;
+        $config = [
+
+            "product_name" => [
+                "id" => "product_name",
+                "label" => "Product Name",
+                "type" => "text",
+            ],
+            "product_price" => [
+                "id" => "product_price",
+                "label" => "Product Price",
+                "type" => "text",
+            ],
+            "product_merchantprice" => [
+                "id" => "product_name",
+                "label" => "Product Mer. Price",
+                "type" => "text",
+            ],
+            "product_mrp" => [
+                "id" => "product_mrp",
+                "label" => "Product MRP",
+                "type" => "text",
+            ], "product_description" => [
+                "id" => "product_description",
+                "label" => "Product Description",
+                "type" => "text",
+            ], "product_stockcount" => [
+                "id" => "product_stockcount",
+                "label" => "Product Stock Units",
+                "type" => "text",
+            ], "product_isverified" => [
+                "id" => "product_isverified",
+                "label" => "Verified Product",
+                "type" => "text",
+            ],
+
+            "image" => [
+                "id" => "document",
+                "label" => "Image",
+                "type" => "text",
+            ],
+
+
+        ];
+
+        return view("panel.utilities.Tabel.productsection", array("data" => $data, "config" => $config));
+    }
+    public function changeStatus(Request $req, $id)
+    {
+        $section = sectionToProduct::where("id", "=", $id)->get();
+        if (count($section) > 0) {
+            $data['isActive'] = 1 - (int)$section[0]['isActive'];
+            sectionToProduct::where("id", "=", $id)->update($data);
+            // return ($section[0]['isActive']);
+        }
+        return redirect()->back()->with("Product Added");
+    }
     public function addProductForm()
     {
 
@@ -189,6 +249,41 @@ class productController extends Controller
         ];
         return view("panel.utilities.Form.forms", array("formConfig" => $config, "action" => "/product-add-submit", "method" => "POST", "title" => "Add Product"));
     }
+    public function addProductSectionForm()
+    {
+
+        $productList = $this->getProduct();
+        $sectionList = sectionModel::where("section_isactive", "=", 1)->get();
+        $config = [
+
+
+            "section_name" => [
+                "id" => "section_id",
+                "label" => "Section",
+                "type" => "option",
+                "name" => "section_id",
+                "optionSet" => $sectionList,
+                "optionLabel" => "section_label",
+                "optionValue" => "id",
+                "value" => 0
+            ],
+            "product_name" => [
+                "id" => "product_id",
+                "label" => "Product",
+                "type" => "option",
+                "name" => "product_id",
+                "optionSet" => $productList,
+                "optionLabel" => "product_name",
+                "optionValue" => "product_id",
+                "value" => 0
+            ],
+
+
+
+
+        ];
+        return view("panel.utilities.Form.forms", array("formConfig" => $config, "action" => "/product-section-submit", "method" => "POST", "title" => "Add Product in section"));
+    }
     public function addProductFormData(Request $req)
     {
         $data = new productModel;
@@ -211,6 +306,30 @@ class productController extends Controller
         }
         return redirect()->back()->with("Product Added");
     }
+    public function addProductSectionFormData(Request $req)
+    {
+        $data = new productModel;
+        $data->product_id = md5(microtime());
+        $data->category_id = $req->category_id;
+        $data->product_price = isset($req->product_price) ? $req->product_price : "0";
+        $data->product_merchantprice = isset($req->product_merchantprice) ? $req->product_merchantprice : "0";
+        $data->product_mrp = isset($req->product_mrp) ? $req->product_mrp : "0";
+        $data->product_name = $req->product_name ? $req->product_name : "";
+        $data->product_description = $req->product_description ? $req->product_description : "";
+        $data->product_stockcount = $req->product_stockcount ? $req->product_stockcount : "1";
+        $data->product_stockcount = $req->product_stockcount ? $req->product_stockcount : "1";
+        $data->created_by = $req->uid ? $req->uid : "admin";
+        $data->created_at = date("Y/m/d H:i:s");
+        $data->updated_at = date("Y/m/d H:i:s");
+        if ($data->save()) {
+            $docs = new documentController;
+            $res = $data->id;
+            $docRes = $docs->addDocument($req, $res);
+        }
+        return redirect()->back()->with("Product Added");
+    }
+
+
     public function addProductFormDataByApi(Request $req)
     {
         $data = new productModel;
@@ -361,7 +480,7 @@ class productController extends Controller
         $sections = sectionModel::where("section_isactive", "=", 1)->get();
         $data = [];
         foreach ($sections as $section) {
-            $product = sectionToProduct::where("section_model_id", "=", (int)$section['id'])->with('product')->get();
+            $product = sectionToProduct::where("section_model_id", "=", (int)$section['id'])->with('product')->has("product")->get();
             $res = [];
             $res['section_id'] = (int)$section['id'];
             $res['section_label'] = $section['section_label'];
@@ -372,23 +491,42 @@ class productController extends Controller
         }
         return $data;
     }
+
     public function sectionProductById(Request $req, $id)
     {
+
         $sections = sectionModel::where("id", $id)->where("section_isactive", "=", 1)->get();
         $data = [];
         foreach ($sections as $section) {
-            $product = sectionToProduct::where("section_model_id", "=", (int)$section['id'])->with('product')->get();
+            $product = sectionToProduct::where("section_model_id", "=", (int)$section['id'])->with('product')->has('product')->get();
             $res = [];
             $res['section_id'] = (int)$section['id'];
             $res['section_label'] = $section['section_label'];
             $res['products'] = $product;
             if (count($product) > 0) {
+
                 array_push($data, $res);
             }
         }
         return $data;
     }
     public function createSection(Request $req)
+    {
+        $product = $req->product_id;
+        $section = $req->section_id;
+        $sectionCheck =  sectionToProduct::where("section_model_id", "=", $section)->where("product_model_id", "=", $product)->get();
+        if (count($sectionCheck) == 0) {
+            $sectionData = array();
+            $sectionData['section_model_id'] = $section;
+            $sectionData['product_model_id'] = $product;
+            $sectionData['created_at'] = date("Y/m/d H:i:s");
+            $sectionData['updated_at'] = date("Y/m/d H:i:s");
+            sectionToProduct::insert($sectionData);
+        }
+
+        return redirect()->back()->with("Section updated");
+    }
+    public function createSectionByAPI(Request $req)
     {
         $data = $req->section;
         $section = array();

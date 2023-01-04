@@ -80,8 +80,8 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
+                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user1-128x128.jpg"
+                                    alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Brad Diesel
@@ -97,8 +97,8 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user8-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
+                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user8-128x128.jpg"
+                                    alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         John Pierce
@@ -114,8 +114,8 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user3-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
+                                <img src="{{ config('app.APP_URL') }}/assets/dist/img/user3-128x128.jpg"
+                                    alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Nora Silvester
@@ -192,8 +192,8 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ config('app.APP_URL') }}/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="{{ config('app.APP_URL') }}/assets/dist/img/user2-160x160.jpg"
+                            class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">
@@ -223,67 +223,148 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
-                   <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'category'))) menu-open @endif">
-                    <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'category'))) active @endif">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Category
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ config('app.APP_URL') }}/category"
-                                class='nav-link @if (session('activePage') != null &&
-                                    (session('activePage') == 'category' || str_contains(session('activePage'), 'category-edit'))) active @endif '>
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>View Category</p>
+                        <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'category')) ) menu-open @endif">
+                            <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'category')) ) active @endif">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Category
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/category"
+                                        class='nav-link @if (session('activePage') != null &&
+                                            (session('activePage') == 'category' || str_contains(session('activePage'), 'category-edit'))) active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/category-add"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'category-add') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Category</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ config('app.APP_URL') }}/category-add"
-                                class='nav-link @if (session('activePage') != null && session('activePage') == 'category-add') active @endif '>
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add Category</p>
+                        <li class="nav-item @if (session('activePage') != null &&
+                            (session('activePage') == 'product' ||
+                                session('activePage') == 'product-edit' ||
+                                session('activePage') == 'product-add')) menu-open @endif">
+                            <a href="#" class="nav-link @if (session('activePage') != null &&
+                                (session('activePage') == 'product' ||
+                                    session('activePage') == 'product-edit' ||
+                                    session('activePage') == 'product-add')) active @endif">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Product
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product"
+                                        class='nav-link @if (session('activePage') != null &&
+                                            (session('activePage') == 'product' || str_contains(session('activePage'), 'product-edit'))) active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Product</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-add"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-add') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Product</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
-                </li>
-                <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'product'))) menu-open @endif">
-                  <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'product'))) active @endif">
-                      <i class="nav-icon fas fa-tachometer-alt"></i>
-                      <p>
-                          Product
-                          <i class="right fas fa-angle-left"></i>
-                      </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                          <a href="{{ config('app.APP_URL') }}/product"
-                              class='nav-link @if (session('activePage') != null &&
-                                  (session('activePage') == 'product' || str_contains(session('activePage'), 'product-edit'))) active @endif '>
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>View Product</p>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="{{ config('app.APP_URL') }}/product-add"
-                              class='nav-link @if (session('activePage') != null && session('activePage') == 'product-add') active @endif '>
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Add Product</p>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-                        <li class="nav-item">
+                        <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'product-section')) ) menu-open @endif">
+                            <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'product-section')) ) active @endif">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Product Section
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-view"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-view') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Product Section</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-add"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-add') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Product in product section</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{-- <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'delivery-person')) ) menu-open @endif">
+                            <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'delivery-person')) ) active @endif">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Delivery Person Section
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-view"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-view') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Delivery Person</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-add"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-add') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Delivery Person</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> --}}
+                        {{-- <li class="nav-item @if (session('activePage') != null && str_contains(session('activePage'), 'order-section')) ) menu-open @endif">
+                            <a href="#" class="nav-link @if (session('activePage') != null && str_contains(session('activePage'), 'order-section')) ) active @endif">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Order Section
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-view"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-view') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Orders</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ config('app.APP_URL') }}/product-section-add"
+                                        class='nav-link @if (session('activePage') != null && session('activePage') == 'product-section-add') active @endif '>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Delivery Person</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
+                                    View Order
+
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -334,6 +415,16 @@
                 "lengthChange": false,
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            });
+            $(".table-multi").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
                 "paging": true,
@@ -347,20 +438,20 @@
         });
     </script>
     <script>
-      const imageDelete = async (domain,documentid)=>{
-        let url = `${domain}/delete-document/${documentid}`
-        let res = await fetch(url,{
-          method:'GET',
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        })
-        let body = res.body;
-        if(body.response == true){
-          location.reload();
+        const imageDelete = async (domain, documentid) => {
+            let url = `${domain}/delete-document/${documentid}`
+            let res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+            let body = res.body;
+            if (body.response == true) {
+                location.reload();
+            }
         }
-      }
     </script>
 </body>
 

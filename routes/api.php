@@ -55,7 +55,7 @@ Route::get("/document/{label}", [documentController::class, "getDocumentByLabel"
 Route::post("/add/document", [documentController::class, "addDocument"]);
 
 Route::get("/product-section", [productController::class, "sectionProduct"]);
-Route::post("/product-section/add", [productController::class, "createSection"]);
+Route::post("/product-section/add", [productController::class, "createSectionByAPI"]);
 Route::get("/getSection/{id}", [productController::class, "sectionProductById"]);
 
 Route::post("/client/register", [clientController::class, "addUser"]);

@@ -48,9 +48,10 @@ class deliveryController extends Controller
         }
         return ["response" => true];
     }
-public function getOrderStatus(Request $req){
-    return deliveryModel::where("order_id", "=", $req->orderId)->get();
-}
+    public function getOrderStatus(Request $req)
+    {
+        return deliveryModel::where("order_id", "=", $req->orderId)->get();
+    }
     public function createOrderHistoy(Request $req)
     {
         $orderStatus = deliveryModel::where("order_id", "=", $req->orderId)->where("status_id", "=", $req->statusId)->get();
